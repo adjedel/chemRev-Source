@@ -1,7 +1,7 @@
 'use server';
 
 import { generatePracticeQuestions } from '@/ai/flows/generate-practice-questions';
-import { generateAdaptiveQuiz, type AdaptiveQuizInput } from '@/ai/flows/adaptive-quiz-generation';
+import { generateAdaptiveQuiz, type AdaptiveQuizInput, type AdaptiveQuizOutput } from '@/ai/flows/adaptive-quiz-generation';
 import { getAnswerFeedback } from '@/ai/flows/feedback-on-answers';
 
 export async function handleGeneratePracticeQuestions(topic: string) {
@@ -38,21 +38,28 @@ export async function handleGenerateAdaptiveQuiz(input: AdaptiveQuizInput) {
     }
   }
 
-export async function generateFullQuiz(input: { topic: string, difficulty: 'easy' | 'medium' | 'hard' }) {
+  export async function generateFullQuiz(input: { topic: string, difficulty: 'easy' | 'medium' | 'hard' }) {
     try {
-      const questions = [];
+      const questions: AdaptiveQuizOutput[] = [];
+      const generatedQuestions: string[] = [];
+  
       for (let i = 0; i < 5; i++) {
-        const result = await generateAdaptiveQuiz({ 
-            topic: input.topic, 
-            difficulty: input.difficulty,
-            // In a real scenario, we might adapt based on previous questions in this same batch
-            studentPreviousAnswers: [], 
+        const result = await generateAdaptiveQuiz({
+          topic: input.topic,
+          difficulty: input.difficulty,
+          studentPreviousAnswers: [],
+          questionsToAvoid: generatedQuestions, // Pass already generated questions
         });
-        questions.push(result);
+        
+        if (result) {
+          questions.push(result);
+          generatedQuestions.push(result.question); // Add the new question to our avoidance list
+        }
       }
+      
       return { success: true, data: questions };
     } catch (error) {
       console.error('Error generating full quiz:', error);
       return { success: false, error: 'Failed to generate full quiz.' };
     }
-}
+  }

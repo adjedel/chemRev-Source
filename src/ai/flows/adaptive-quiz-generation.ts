@@ -19,6 +19,7 @@ const AdaptiveQuizInputSchema = z.object({
     answer: z.string(),
     isCorrect: z.boolean()
   })).optional().describe('Array of the student\'s previous answers to adapt difficulty.'),
+  questionsToAvoid: z.array(z.string()).optional().describe('An array of questions that have already been generated in this session to ensure variety.'),
 });
 
 export type AdaptiveQuizInput = z.infer<typeof AdaptiveQuizInputSchema>;
@@ -44,6 +45,13 @@ const adaptiveQuizPrompt = ai.definePrompt({
 
   Generate a quiz question on the topic of {{{topic}}}. The difficulty should be {{{difficulty}}}.
 
+  {{#if questionsToAvoid}}
+  IMPORTANT: Avoid generating questions that are too similar to the following already-generated questions:
+  {{#each questionsToAvoid}}
+  - {{{this}}}
+  {{/each}}
+  {{/if}}
+
   Here are some of the student\'s previous answers:
   {{#if studentPreviousAnswers}}
     {{#each studentPreviousAnswers}}
@@ -55,8 +63,7 @@ const adaptiveQuizPrompt = ai.definePrompt({
     The student has not answered any questions yet.
   {{/if}}
 
-  Make sure to generate possible answers, and indicate which one is correct, and explain why that answer is correct.
-  The possible answers should be plausible for a student at the given difficulty level.
+  Make sure to generate a unique question with plausible possible answers, and indicate which one is correct, and explain why that answer is correct.
 `,
 });
 
