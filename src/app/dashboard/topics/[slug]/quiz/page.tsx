@@ -1,5 +1,5 @@
 'use client';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import Quiz from '@/components/quiz';
 import { getTopicBySlug } from '@/lib/topics';
 import Header from '@/components/header';
@@ -10,15 +10,17 @@ import { useEffect, useState } from 'react';
 import type { AdaptiveQuizOutput } from '@/ai/flows/adaptive-quiz-generation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function QuizPage({ params }: { params: { slug: string } }) {
+export default function QuizPage() {
   const router = useRouter();
-  const slug = params.slug;
+  const params = useParams();
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   const [questions, setQuestions] = useState<AdaptiveQuizOutput[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const topic = getTopicBySlug(slug);
 
   useEffect(() => {
+    if (!slug) return;
     const storedQuestions = localStorage.getItem(`quiz-${slug}`);
     if (storedQuestions) {
       try {

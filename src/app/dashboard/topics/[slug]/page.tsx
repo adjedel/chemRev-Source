@@ -1,7 +1,6 @@
 'use client';
 
-import { notFound, useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import { useState } from 'react';
 import Header from '@/components/header';
 import { getTopicBySlug } from '@/lib/topics';
@@ -13,13 +12,14 @@ import { Label } from '@/components/ui/label';
 import { generateFullQuiz } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 
-export default function TopicPage({ params }: { params: { slug: string } }) {
+export default function TopicPage() {
   const router = useRouter();
+  const params = useParams();
   const { toast } = useToast();
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [isGenerating, setIsGenerating] = useState(false);
   
-  const slug = params.slug;
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   const topic = getTopicBySlug(slug);
 
   if (!topic) {
