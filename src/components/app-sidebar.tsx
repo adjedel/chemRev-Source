@@ -10,8 +10,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { categories } from '@/lib/topics';
@@ -19,9 +17,6 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Atom, LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from './ui/collapsible';
-import { ChevronRight } from 'lucide-react';
-
 
 export default function AppSidebar() {
   const pathname = usePathname();
@@ -57,35 +52,21 @@ export default function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarGroup>
-           <SidebarMenu>
+          <SidebarGroupLabel>Categories</SidebarGroupLabel>
+          <SidebarMenu>
             {categories.map((category) => (
-              <Collapsible key={category.slug} asChild>
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                     <SidebarMenuButton
-                        isActive={pathname.includes(`/dashboard/categories/${category.slug}`)}
-                        className="justify-between"
-                      >
-                        <div className="flex items-center gap-2">
-                           <category.icon className="h-4 w-4" />
-                           <span>{category.title}</span>
-                        </div>
-                        <ChevronRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-90" />
-                      </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent asChild>
-                     <SidebarMenuSub>
-                        {category.topics.map((topic) => (
-                           <SidebarMenuItem key={topic.slug}>
-                              <SidebarMenuSubButton asChild isActive={pathname.includes(`/dashboard/topics/${topic.slug}`)}>
-                                 <Link href={`/dashboard/topics/${topic.slug}`}>{topic.title}</Link>
-                              </SidebarMenuSubButton>
-                           </SidebarMenuItem>
-                        ))}
-                     </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
+              <SidebarMenuItem key={category.slug}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith(`/dashboard/categories/${category.slug}`)}
+                  tooltip={category.title}
+                >
+                  <Link href={`/dashboard/categories/${category.slug}`}>
+                    <category.icon />
+                    <span>{category.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             ))}
           </SidebarMenu>
         </SidebarGroup>
