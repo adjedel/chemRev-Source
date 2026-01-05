@@ -29,9 +29,10 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [history, setHistory] = useState<QuizHistory[]>([]);
+  const [isQuizComplete, setIsQuizComplete] = useState(false);
   const { toast } = useToast();
 
-  const fetchQuestion = async (currentHistory: QuizHistory[], currentDifficulty: 'easy' | 'medium' | 'hard') => {
+  const fetchQuestion = async (currentHistory: QuizHistory[], currentDifficulty: 'easy' | 'medium' | 'hard'>) => {
     setIsLoading(true);
     setFeedback(null);
     setSelectedAnswer(null);
@@ -92,7 +93,11 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
   };
 
   const handleNextQuestion = () => {
-    fetchQuestion(history, difficulty);
+    if (history.length >= QUIZ_LENGTH) {
+      setIsQuizComplete(true);
+    } else {
+      fetchQuestion(history, difficulty);
+    }
   };
   
   const score = history.filter(h => h.isCorrect).length;
@@ -115,7 +120,7 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
     );
   }
 
-  if (history.length >= QUIZ_LENGTH) {
+  if (isQuizComplete) {
     return (
         <div className="flex h-full items-center justify-center p-4">
             <Card className="w-full max-w-2xl text-center">
@@ -128,6 +133,7 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
                     <p className="my-4 text-6xl font-bold">{score} / {QUIZ_LENGTH}</p>
                     <Button onClick={() => {
                         setHistory([]);
+                        setIsQuizComplete(false);
                         fetchQuestion([], 'medium');
                     }}>
                         Try Again
@@ -172,7 +178,9 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
                 {isSubmitting ? <Loader2 className="animate-spin" /> : 'Submit Answer'}
               </Button>
             ) : (
-                <Button onClick={handleNextQuestion} className="w-full">Next Question</Button>
+                <Button onClick={handleNextQuestion} className="w-full">
+                  {history.length >= QUIZ_LENGTH ? 'Finish Quiz' : 'Next Question'}
+                </Button>
             )}
 
             {feedback && (
