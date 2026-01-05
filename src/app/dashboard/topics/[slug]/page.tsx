@@ -31,11 +31,20 @@ export default function TopicPage() {
     const result = await generateFullQuiz({ topic: topic.title, difficulty });
     setIsGenerating(false);
 
-    if (result.success && result.data) {
+    // Proceed if we have at least one question
+    if (result.success && result.data && result.data.length > 0) {
+      if (result.error) {
+        // Inform the user if the quiz is incomplete, but still proceed
+        toast({
+          title: 'Quiz Generation Incomplete',
+          description: 'Could not generate all questions, but you can start with what we have!',
+        });
+      }
       // Save to localStorage to pass to the quiz page
       localStorage.setItem(`quiz-${topic.slug}`, JSON.stringify(result.data));
       router.push(`/dashboard/topics/${topic.slug}/quiz`);
     } else {
+      // Handle the case where zero questions were generated
       toast({
         variant: 'destructive',
         title: 'Quiz Generation Failed',
@@ -50,7 +59,6 @@ export default function TopicPage() {
         title={topic.title}
         breadcrumbs={[
           { name: 'Dashboard', href: '/dashboard' },
-          { name: 'Categories', href: `/dashboard/categories` },
           { name: topic.category, href: `/dashboard/categories/${topic.category.toLowerCase().replace(/ /g, '-')}` },
           { name: topic.title, href: `/dashboard/topics/${topic.slug}` },
         ]}

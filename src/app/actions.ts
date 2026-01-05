@@ -39,10 +39,10 @@ export async function handleGenerateAdaptiveQuiz(input: AdaptiveQuizInput) {
   }
 
   export async function generateFullQuiz(input: { topic: string, difficulty: 'easy' | 'medium' | 'hard' }) {
+    const questions: AdaptiveQuizOutput[] = [];
+    const generatedQuestions: string[] = [];
+
     try {
-      const questions: AdaptiveQuizOutput[] = [];
-      const generatedQuestions: string[] = [];
-  
       for (let i = 0; i < 5; i++) {
         const result = await generateAdaptiveQuiz({
           topic: input.topic,
@@ -54,12 +54,17 @@ export async function handleGenerateAdaptiveQuiz(input: AdaptiveQuizInput) {
         if (result) {
           questions.push(result);
           generatedQuestions.push(result.question); // Add the new question to our avoidance list
+        } else {
+          // If a single generation fails, we can stop and return what we have.
+          break;
         }
       }
-      
+      // Return success even if we got fewer than 5 questions.
       return { success: true, data: questions };
     } catch (error) {
       console.error('Error generating full quiz:', error);
-      return { success: false, error: 'Failed to generate full quiz.' };
+      // Even in case of a total failure, return the (potentially empty) list of questions we have.
+      // This prevents a server crash and allows the client to handle the empty/partial state.
+      return { success: true, data: questions, error: 'Failed to generate the complete quiz.' };
     }
   }
