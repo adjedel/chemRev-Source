@@ -18,8 +18,9 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
   const { toast } = useToast();
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
   const [isGenerating, setIsGenerating] = useState(false);
-
-  const topic = getTopicBySlug(params.slug);
+  
+  const slug = params.slug;
+  const topic = getTopicBySlug(slug);
 
   if (!topic) {
     notFound();
