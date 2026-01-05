@@ -32,7 +32,7 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
   const [isQuizComplete, setIsQuizComplete] = useState(false);
   const { toast } = useToast();
 
-  const fetchQuestion = async (currentHistory: QuizHistory[], currentDifficulty: 'easy' | 'medium' | 'hard'>) => {
+  const fetchQuestion = async (currentHistory: QuizHistory[], currentDifficulty: 'easy' | 'medium' | 'hard') => {
     setIsLoading(true);
     setFeedback(null);
     setSelectedAnswer(null);
@@ -78,7 +78,7 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
       if (correctAnswers > history.length / 2 && difficulty !== 'hard') {
         setDifficulty('hard');
       } else if (correctAnswers < history.length / 2 && difficulty !== 'easy') {
-        setDifficulty('easy');
+        setDifficulty('medium');
       } else {
         setDifficulty('medium');
       }
@@ -98,6 +98,10 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
     } else {
       fetchQuestion(history, difficulty);
     }
+  };
+
+  const handleFinishQuiz = () => {
+    setIsQuizComplete(true);
   };
   
   const score = history.filter(h => h.isCorrect).length;
@@ -178,7 +182,7 @@ export default function Quiz({ topicTitle }: { topicTitle: string }) {
                 {isSubmitting ? <Loader2 className="animate-spin" /> : 'Submit Answer'}
               </Button>
             ) : (
-                <Button onClick={handleNextQuestion} className="w-full">
+                <Button onClick={history.length >= QUIZ_LENGTH ? handleFinishQuiz : handleNextQuestion} className="w-full">
                   {history.length >= QUIZ_LENGTH ? 'Finish Quiz' : 'Next Question'}
                 </Button>
             )}
