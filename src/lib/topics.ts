@@ -32,7 +32,7 @@ export const categories: Category[] = [
         category: 'Physical Chemistry',
         description: 'Understand energy, heat, and work in chemical systems with the laws of thermodynamics.',
         icon: Thermometer,
-        progress: 25,
+        progress: 0,
       },
       {
         slug: 'electrochemistry',
@@ -64,7 +64,7 @@ export const categories: Category[] = [
         category: 'Organic Chemistry',
         description: 'An introduction to the structure, properties, and reactions of organic compounds.',
         icon: BenzeneRing,
-        progress: 10,
+        progress: 0,
       },
       {
         slug: 'functional-groups',
@@ -72,7 +72,7 @@ export const categories: Category[] = [
         category: 'Organic Chemistry',
         description: 'Identify and understand the reactivity of common functional groups in organic molecules.',
         icon: Beaker,
-        progress: 5,
+        progress: 0,
       },
       {
         slug: 'spectroscopy',
@@ -96,7 +96,7 @@ export const categories: Category[] = [
         category: 'Inorganic Chemistry',
         description: 'Master the quantitative relationships between reactants and products in chemical reactions.',
         icon: Scale,
-        progress: 75,
+        progress: 0,
       },
       {
         slug: 'reaction-types',
@@ -104,7 +104,7 @@ export const categories: Category[] = [
         category: 'Inorganic Chemistry',
         description: 'Explore synthesis, decomposition, single and double displacement reactions.',
         icon: FlaskConical,
-        progress: 40,
+        progress: 0,
       },
       {
         slug: 'atomic-structure',
@@ -112,7 +112,7 @@ export const categories: Category[] = [
         category: 'Inorganic Chemistry',
         description: 'Understand the fundamental structure of atoms, including protons, neutrons, and electrons.',
         icon: Atom,
-        progress: 50,
+        progress: 0,
       },
     ],
   },
@@ -232,7 +232,7 @@ export const categories: Category[] = [
         category: 'Analytical Chemistry',
         description: 'Delve into pH, pKa, buffers, and titration curves for acid-base chemistry.',
         icon: TestTube,
-        progress: 90,
+        progress: 0,
       },
       {
         slug: 'titrations',
