@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function QuizPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
-  const { slug } = params;
+  const slug = params.slug;
   const [questions, setQuestions] = useState<AdaptiveQuizOutput[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
