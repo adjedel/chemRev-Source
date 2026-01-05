@@ -1,4 +1,4 @@
-import { Atom, Beaker, LayoutDashboard, TestTube, Thermometer, Zap } from 'lucide-react';
+import { Atom, Beaker, Dna, FlaskConical, TestTube, Thermometer, Zap } from 'lucide-react';
 import { BenzeneRing } from '@/components/icons';
 import type { LucideIcon } from 'lucide-react';
 
@@ -13,22 +13,6 @@ export type Topic = {
 
 export const topics: Topic[] = [
   {
-    slug: 'stoichiometry',
-    title: 'Stoichiometry',
-    category: 'Fundamentals',
-    description: 'Master the quantitative relationships between reactants and products in chemical reactions.',
-    icon: Atom,
-    progress: 75,
-  },
-  {
-    slug: 'chemical-reactions',
-    title: 'Chemical Reactions',
-    category: 'Fundamentals',
-    description: 'Explore types of chemical reactions, balancing equations, and reaction kinetics.',
-    icon: Beaker,
-    progress: 50,
-  },
-  {
     slug: 'thermodynamics',
     title: 'Thermodynamics',
     category: 'Physical Chemistry',
@@ -37,28 +21,60 @@ export const topics: Topic[] = [
     progress: 25,
   },
   {
-    slug: 'acids-and-bases',
-    title: 'Acids and Bases',
+    slug: 'electrochemistry',
+    title: 'Electrochemistry',
     category: 'Physical Chemistry',
-    description: 'Delve into pH, pKa, buffers, and titration curves for acid-base chemistry.',
-    icon: TestTube,
-    progress: 90,
+    description: 'Learn about redox reactions, galvanic cells, and electrolysis.',
+    icon: Zap,
+    progress: 0,
   },
   {
-    slug: 'organic-chemistry',
-    title: 'Organic Chemistry',
-    category: 'Advanced Topics',
+    slug: 'organic-structures',
+    title: 'Organic Structures',
+    category: 'Organic Chemistry',
     description: 'An introduction to the structure, properties, and reactions of organic compounds.',
     icon: BenzeneRing,
     progress: 10,
   },
   {
-    slug: 'electrochemistry',
-    title: 'Electrochemistry',
-    category: 'Advanced Topics',
-    description: 'Learn about redox reactions, galvanic cells, and electrolysis.',
-    icon: Zap,
+    slug: 'functional-groups',
+    title: 'Functional Groups',
+    category: 'Organic Chemistry',
+    description: 'Identify and understand the reactivity of common functional groups in organic molecules.',
+    icon: Beaker,
+    progress: 5,
+  },
+  {
+    slug: 'stoichiometry',
+    title: 'Stoichiometry',
+    category: 'Inorganic Chemistry',
+    description: 'Master the quantitative relationships between reactants and products in chemical reactions.',
+    icon: Atom,
+    progress: 75,
+  },
+  {
+    slug: 'reaction-types',
+    title: 'Reaction Types',
+    category: 'Inorganic Chemistry',
+    description: 'Explore synthesis, decomposition, single and double displacement reactions.',
+    icon: FlaskConical,
+    progress: 40,
+  },
+  {
+    slug: 'amino-acids',
+    title: 'Amino Acids & Proteins',
+    category: 'Biochemistry',
+    description: 'Learn the structures and properties of amino acids, the building blocks of proteins.',
+    icon: Dna,
     progress: 0,
+  },
+  {
+    slug: 'acids-and-bases',
+    title: 'Acids and Bases',
+    category: 'Analytical Chemistry',
+    description: 'Delve into pH, pKa, buffers, and titration curves for acid-base chemistry.',
+    icon: TestTube,
+    progress: 90,
   },
 ];
 

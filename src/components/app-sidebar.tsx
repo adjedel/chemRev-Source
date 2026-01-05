@@ -27,6 +27,15 @@ const topicCategories = topics.reduce((acc, topic) => {
   return acc;
 }, {} as Record<string, Topic[]>);
 
+const categoryOrder = [
+  'Physical Chemistry',
+  'Organic Chemistry',
+  'Inorganic Chemistry',
+  'Biochemistry',
+  'Analytical Chemistry',
+];
+
+
 export default function AppSidebar() {
   const pathname = usePathname();
 
@@ -60,15 +69,15 @@ export default function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        {Object.entries(topicCategories).map(([category, topicsInCategory]) => (
+        {categoryOrder.map((category) => (
           <SidebarGroup key={category}>
             <SidebarGroupLabel>{category}</SidebarGroupLabel>
             <SidebarMenu>
-              {topicsInCategory.map((topic) => (
+              {topicCategories[category]?.map((topic) => (
                 <SidebarMenuItem key={topic.slug}>
                   <SidebarMenuButton
                     asChild
-                    isActive={pathname === `/dashboard/topics/${topic.slug}`}
+                    isActive={pathname.includes(`/dashboard/topics/${topic.slug}`)}
                     tooltip={topic.title}
                   >
                     <Link href={`/dashboard/topics/${topic.slug}`}>
