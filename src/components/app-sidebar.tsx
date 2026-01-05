@@ -10,30 +10,17 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { topics } from '@/lib/topics';
+import { categories } from '@/lib/topics';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Atom, LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Topic } from '@/lib/topics';
-
-const topicCategories = topics.reduce((acc, topic) => {
-  if (!acc[topic.category]) {
-    acc[topic.category] = [];
-  }
-  acc[topic.category].push(topic);
-  return acc;
-}, {} as Record<string, Topic[]>);
-
-const categoryOrder = [
-  'Physical Chemistry',
-  'Organic Chemistry',
-  'Inorganic Chemistry',
-  'Biochemistry',
-  'Analytical Chemistry',
-];
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from './ui/collapsible';
+import { ChevronRight } from 'lucide-react';
 
 
 export default function AppSidebar() {
@@ -69,27 +56,39 @@ export default function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        {categoryOrder.map((category) => (
-          <SidebarGroup key={category}>
-            <SidebarGroupLabel>{category}</SidebarGroupLabel>
-            <SidebarMenu>
-              {topicCategories[category]?.map((topic) => (
-                <SidebarMenuItem key={topic.slug}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.includes(`/dashboard/topics/${topic.slug}`)}
-                    tooltip={topic.title}
-                  >
-                    <Link href={`/dashboard/topics/${topic.slug}`}>
-                      <topic.icon className="h-4 w-4" />
-                      <span>{topic.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
+        <SidebarGroup>
+           <SidebarMenu>
+            {categories.map((category) => (
+              <Collapsible key={category.slug} asChild>
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                     <SidebarMenuButton
+                        isActive={pathname.includes(`/dashboard/categories/${category.slug}`)}
+                        className="justify-between"
+                      >
+                        <div className="flex items-center gap-2">
+                           <category.icon className="h-4 w-4" />
+                           <span>{category.title}</span>
+                        </div>
+                        <ChevronRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-90" />
+                      </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent asChild>
+                     <SidebarMenuSub>
+                        {category.topics.map((topic) => (
+                           <SidebarMenuItem key={topic.slug}>
+                              <SidebarMenuSubButton asChild isActive={pathname.includes(`/dashboard/topics/${topic.slug}`)}>
+                                 <Link href={`/dashboard/topics/${topic.slug}`}>{topic.title}</Link>
+                              </SidebarMenuSubButton>
+                           </SidebarMenuItem>
+                        ))}
+                     </SidebarMenuSub>
+                  </CollapsibleContent>
                 </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroup>
-        ))}
+              </Collapsible>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <div className="flex items-center gap-3 rounded-md bg-sidebar-accent/10 p-2">

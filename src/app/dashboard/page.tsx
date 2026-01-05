@@ -1,6 +1,6 @@
 import Header from '@/components/header';
-import TopicCard from '@/components/topic-card';
-import { topics } from '@/lib/topics';
+import CategoryCard from '@/components/category-card';
+import { categories } from '@/lib/topics';
 
 export default function DashboardPage() {
   return (
@@ -13,12 +13,12 @@ export default function DashboardPage() {
         <div className="mb-6">
           <h2 className="text-2xl font-bold tracking-tight">Welcome Back!</h2>
           <p className="text-muted-foreground">
-            Choose a topic to start reviewing or take a practice quiz.
+            Choose a category to start reviewing or take a practice quiz.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {topics.map((topic) => (
-            <TopicCard key={topic.slug} topic={topic} />
+          {categories.map((category) => (
+            <CategoryCard key={category.slug} category={category} />
           ))}
         </div>
       </main>

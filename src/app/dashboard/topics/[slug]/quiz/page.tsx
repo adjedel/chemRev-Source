@@ -19,6 +19,8 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
         title={`${topic.title} Quiz`}
         breadcrumbs={[
           { name: 'Dashboard', href: '/dashboard' },
+          { name: 'Categories', href: `/dashboard/categories` },
+          { name: topic.category, href: `/dashboard/categories/${topic.category.toLowerCase().replace(/ /g, '-')}` },
           { name: topic.title, href: `/dashboard/topics/${topic.slug}` },
           { name: 'Quiz', href: `/dashboard/topics/${topic.slug}/quiz` },
         ]}
