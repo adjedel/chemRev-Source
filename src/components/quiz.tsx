@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import type { Topic } from '@/lib/topics';
 import type { AdaptiveQuizOutput } from '@/ai/flows/adaptive-quiz-generation';
 import type { AnswerFeedbackOutput } from '@/ai/flows/feedback-on-answers';
 import { handleGenerateAdaptiveQuiz, handleGetAnswerFeedback } from '@/app/actions';
@@ -22,7 +21,7 @@ type QuizHistory = {
 
 const QUIZ_LENGTH = 5;
 
-export default function Quiz({ topic }: { topic: Topic }) {
+export default function Quiz({ topicTitle }: { topicTitle: string }) {
   const [question, setQuestion] = useState<AdaptiveQuizOutput | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -39,7 +38,7 @@ export default function Quiz({ topic }: { topic: Topic }) {
     setQuestion(null);
 
     const result = await handleGenerateAdaptiveQuiz({
-      topic: topic.title,
+      topic: topicTitle,
       difficulty: currentDifficulty,
       studentPreviousAnswers: currentHistory,
     });
@@ -58,7 +57,7 @@ export default function Quiz({ topic }: { topic: Topic }) {
 
   useEffect(() => {
     fetchQuestion([], 'medium');
-  }, [topic.title]);
+  }, [topicTitle]);
 
   const handleSubmit = async () => {
     if (!selectedAnswer || !question) return;

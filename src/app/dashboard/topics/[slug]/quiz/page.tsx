@@ -32,7 +32,7 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
         }
       />
       <main className="flex-1 overflow-auto">
-        <Quiz topic={topic} />
+        <Quiz topicTitle={topic.title} />
       </main>
     </div>
   );
