@@ -1,4 +1,4 @@
-import { Atom, Beaker, Dna, FlaskConical, TestTube, Thermometer, Zap, Microscope, Scale, Pipette } from 'lucide-react';
+import { Atom, Beaker, Dna, FlaskConical, TestTube, Thermometer, Zap, Microscope, Scale, Pipette, Flame, Droplet, Recycle, Wind, HeartPulse, DnaIcon } from 'lucide-react';
 import { BenzeneRing } from '@/components/icons';
 import type { LucideIcon } from 'lucide-react';
 
@@ -123,11 +123,35 @@ export const categories: Category[] = [
     icon: Dna,
     topics: [
       {
-        slug: 'amino-acids',
+        slug: 'hydrocarbons',
+        title: 'Hydrocarbons',
+        category: 'Biochemistry',
+        description: 'The fundamental building blocks of organic molecules and life.',
+        icon: Flame,
+        progress: 0,
+      },
+      {
+        slug: 'lipids',
+        title: 'Lipids',
+        category: 'Biochemistry',
+        description: 'Explore the structure and function of fats, oils, and membranes.',
+        icon: Droplet,
+        progress: 0,
+      },
+      {
+        slug: 'amino-acids-and-proteins',
         title: 'Amino Acids & Proteins',
         category: 'Biochemistry',
         description: 'Learn the structures and properties of amino acids, the building blocks of proteins.',
         icon: Dna,
+        progress: 0,
+      },
+      {
+        slug: 'nucleic-acid',
+        title: 'Nucleic Acid',
+        category: 'Biochemistry',
+        description: 'Understand DNA and RNA, the molecules that carry genetic information.',
+        icon: DnaIcon,
         progress: 0,
       },
       {
@@ -136,6 +160,62 @@ export const categories: Category[] = [
         category: 'Biochemistry',
         description: 'Discover how enzymes catalyze biochemical reactions.',
         icon: Beaker,
+        progress: 0,
+      },
+      {
+        slug: 'cellular-respiration',
+        title: 'Cellular Respiration',
+        category: 'Biochemistry',
+        description: 'The process of converting biochemical energy from nutrients into ATP.',
+        icon: Zap,
+        progress: 0,
+      },
+      {
+        slug: 'pentose-phosphate-pathway',
+        title: 'Pentose Phosphate Pathway',
+        category: 'Biochemistry',
+        description: 'A metabolic pathway parallel to glycolysis that generates NADPH and pentoses.',
+        icon: Recycle,
+        progress: 0,
+      },
+      {
+        slug: 'glycogen-metabolism',
+        title: 'Glycogen Metabolism',
+        category: 'Biochemistry',
+        description: 'The regulation of glycogen synthesis and breakdown.',
+        icon: Wind,
+        progress: 0,
+      },
+      {
+        slug: 'gluconeogenesis',
+        title: 'Gluconeogenesis',
+        category: 'Biochemistry',
+        description: 'The synthesis of glucose from non-carbohydrate sources.',
+        icon: Recycle,
+        progress: 0,
+      },
+      {
+        slug: 'fatty-acid-catabolism',
+        title: 'Fatty Acid Catabolism',
+        category: 'Biochemistry',
+        description: 'The breakdown of fatty acids to generate energy.',
+        icon: Flame,
+        progress: 0,
+      },
+      {
+        slug: 'aa-oxidation-and-urea-cycle',
+        title: 'AA Oxidation and Urea Cycle',
+        category: 'Biochemistry',
+        description: 'The breakdown of amino acids and the excretion of nitrogenous waste.',
+        icon: Recycle,
+        progress: 0,
+      },
+      {
+        slug: 'central-dogma',
+        title: 'Central Dogma',
+        category: 'Biochemistry',
+        description: 'The flow of genetic information from DNA to RNA to protein.',
+        icon: HeartPulse,
         progress: 0,
       },
     ],
