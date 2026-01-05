@@ -37,3 +37,22 @@ export async function handleGenerateAdaptiveQuiz(input: AdaptiveQuizInput) {
       return { success: false, error: 'Failed to get feedback.' };
     }
   }
+
+export async function generateFullQuiz(input: { topic: string, difficulty: 'easy' | 'medium' | 'hard' }) {
+    try {
+      const questions = [];
+      for (let i = 0; i < 5; i++) {
+        const result = await generateAdaptiveQuiz({ 
+            topic: input.topic, 
+            difficulty: input.difficulty,
+            // In a real scenario, we might adapt based on previous questions in this same batch
+            studentPreviousAnswers: [], 
+        });
+        questions.push(result);
+      }
+      return { success: true, data: questions };
+    } catch (error) {
+      console.error('Error generating full quiz:', error);
+      return { success: false, error: 'Failed to generate full quiz.' };
+    }
+}
