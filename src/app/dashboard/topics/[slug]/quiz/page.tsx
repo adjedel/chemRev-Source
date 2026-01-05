@@ -12,13 +12,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function QuizPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
+  const { slug } = params;
   const [questions, setQuestions] = useState<AdaptiveQuizOutput[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const topic = getTopicBySlug(params.slug);
+  const topic = getTopicBySlug(slug);
 
   useEffect(() => {
-    const storedQuestions = localStorage.getItem(`quiz-${params.slug}`);
+    const storedQuestions = localStorage.getItem(`quiz-${slug}`);
     if (storedQuestions) {
       try {
         const parsedQuestions = JSON.parse(storedQuestions);
@@ -31,11 +32,11 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
         setError('Failed to load quiz questions. Please try generating them again.');
       }
       // Optional: Clean up localStorage after loading
-      // localStorage.removeItem(`quiz-${params.slug}`);
+      // localStorage.removeItem(`quiz-${slug}`);
     } else {
       setError('No quiz questions found. Please generate them first.');
     }
-  }, [params.slug]);
+  }, [slug]);
 
 
   if (!topic) {
@@ -44,7 +45,7 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
 
   const handleEndQuiz = () => {
     // Clean up localStorage when the user manually ends the quiz
-    localStorage.removeItem(`quiz-${params.slug}`);
+    localStorage.removeItem(`quiz-${slug}`);
     router.push(`/dashboard/topics/${topic.slug}`);
   };
   
